@@ -27,6 +27,7 @@ interface DataGridRow {
 const RecordSet = () => {
   const navigate = useNavigate();
   const [Data,setData] = useState<DataGridRow[]>([]);
+  
    const [rowId,setRowId] = useState(null);
   const [done,setDone] =useState(null);
   const [doneCreate,setDoneCreate] =useState(null);
@@ -48,7 +49,7 @@ const RecordSet = () => {
     const men = {
       hostedZone: data
     }
-    fetch('https://dns-manager-tan.vercel.app/getrecordset',{
+    fetch('http://localhost:5000/getrecordset',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -59,7 +60,7 @@ const RecordSet = () => {
       .then((data) => {
       if (data.success) {
           setData(data?.response);
-          const final = data.response
+          setClickRow(data?.response);
           
           console.log(data.response);
          
@@ -104,7 +105,7 @@ const RecordSet = () => {
     
     }
     ,  {field: 'Action',headerName:'Action',width:100 , renderCell: (params) => (
-      <ZoneAction {...{ params, rowId, setRowId,setDone,data,setSuccessMessage,setErrorMessage }} />
+      <ZoneAction {...{ params, rowId, setRowId,setDone,data,setSuccessMessage,setErrorMessage,clickrow }} />
     ),},
     {
       field: 'delete',
@@ -134,7 +135,7 @@ const RecordSet = () => {
     try {
       
       const final =  JSON.stringify({hostedZone,dataD});
-      let result = await  axios.post('https://dns-manager-tan.vercel.app/deleterecordset',
+      let result = await  axios.post('http://localhost:5000/deleterecordset',
       {final});
      if(result.status === 200){
       //setSuccessMessage()
@@ -170,7 +171,7 @@ const handleCreate = async()=>{
       try {
         
         const hostedZone = {val:data};
-          const result= await axios.post('https://dns-manager-tan.vercel.app/creatednsrecord',
+          const result= await axios.post('http://localhost:5000/creatednsrecord',
          {formData,...hostedZone});
         //  '/bulkCreateHostedZones'
        // var count = 0 ;
@@ -238,7 +239,7 @@ const handleChange = (e) => {
 const handleBulkCreate =async () => {
  
   try {
-    const result= await axios.post('https://dns-manager-tan.vercel.app/createBulkRecordSets',
+    const result= await axios.post('http://localhost:5000/createBulkRecordSets',
     {textareaValue,data});
 
        //count = 0;
@@ -400,7 +401,7 @@ const handleCloseAlert = () => {
       bottom: params.isLastVisible ? 0 : 5,
     })}
    getRowHeight={() => 'auto'}
-   onRowClick={(params)=> setClickRow(params.id)}
+ //  onRowClick={(params)=> setClickRow(params.row)}
     onCellEditCommit={(params) => setRowId(params.id)}
     />
     </Box>

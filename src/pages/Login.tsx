@@ -9,7 +9,7 @@ export const Login = () => {
     const handleClick = async (e)=>{
         e.preventDefault();
         try {
-            const result = await axios.post('https://dns-manager-tan.vercel.app/login',{
+            const result = await axios.post('http://localhost:5000/login',{
               username,password
             });
             if(result.status === 200){

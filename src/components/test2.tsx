@@ -74,7 +74,7 @@ export  interface HostedZone {
           { field: 'CallerReference', headerName: 'Caller Reference', flex: 1 },
           { field: 'ResourceRecordSetCount', headerName: 'Record Set Count', width: 160 },
           {field: 'Action',headerName:'Action',width:100 , renderCell: (params) => (
-            <ZoneAction {...{ params, rowId, setRowId,setDone,data,setSuccessMessage,setErrorMessage }} />
+            <ZoneAction {...{ params, rowId, setRowId,setDone,data,setSuccessMessage,setErrorMessage,clickrow }} />
           ),},
           {
             field: 'delete',
@@ -105,7 +105,7 @@ export  interface HostedZone {
           if(!localStorage.getItem('dns')){
             navigate('/login')
           }
-                fetch('https://dns-manager-tan.vercel.app/allhostedzones')
+                fetch('http://localhost:5000/allhostedzones')
                 .then(response => response.json())
                 .then((data: ApiResponse) => {
                 if (data.success) {
@@ -129,7 +129,7 @@ export  interface HostedZone {
       try {
        
           const parts = id.split('/');
-          const result = await  axios.post('https://dns-manager-tan.vercel.app/deletehostedzone',
+          const result = await  axios.post('http://localhost:5000/deletehostedzone',
           {hostedzone:parts[parts.length - 1]});
           if(result.status===200){
             SetLoading(false);
@@ -147,7 +147,7 @@ export  interface HostedZone {
       console.log('Textarea value:', textareaValue);
       try {
         
-        const result= await axios.post('https://dns-manager-tan.vercel.app/bulkCreateHostedZones',
+        const result= await axios.post('http://localhost:5000/bulkCreateHostedZones',
         {domainNames:textareaValue});
        //  '/bulkCreateHostedZones'
        

@@ -4,12 +4,10 @@ import { Check, Save } from '@mui/icons-material';
 import { green } from '@mui/material/colors';
 import axios from 'axios';
 
-const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,setErrorMessage}) => {
+const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,setErrorMessage,clickrow}) => {
     const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-    // console.log(rowId);
-   //  console.log(params.row);
- //  console.log('hello');
+  
   const handleSubmit = async () => {
     setLoading(true);
     const {Id,Name} = params.row;
@@ -17,7 +15,7 @@ const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,se
     if(params.row.Config){
 
       try {
-        const result =  await axios.post('https://dns-manager-tan.vercel.app/updatehostedzone',{
+        const result =  await axios.post('http://localhost:5000/updatehostedzone',{
            Id,Name
          });
         
@@ -35,8 +33,13 @@ const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,se
         setLoading(false);
       }
     }else{
-      console.log(data);
-      const {Name,Type,TTL,ResourceRecords,id}= params.row;
+       console.log(clickrow);
+       console.log(data);
+       const {Name,Type,TTL,ResourceRecords,id}= params.row;
+       const test = clickrow?.filter(prev=>prev.id === id);
+       const final = test[0];
+       console.log(test[0]);
+
       console.log(Name,ResourceRecords);
       console.log(Type,TTL);
       var val =[];
@@ -55,8 +58,8 @@ const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,se
          val = ResourceRecords;
       }
       try {
-        const result =  await axios.post('https://dns-manager-tan.vercel.app/updatednsrecord',{
-          data,Name,Type,TTL,val
+        const result =  await axios.post('http://localhost:5000/updatednsrecord',{
+          data,Name,Type,TTL,val,final
         });
         if (result.status ===200) {
           setSuccess(true);
@@ -75,7 +78,8 @@ const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,se
     }
 
     }
-
+ 
+  
   useEffect(() => {
     console.log(params.row.Id,rowId);
     console.log(success)
