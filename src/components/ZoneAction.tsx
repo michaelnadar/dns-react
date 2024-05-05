@@ -15,7 +15,7 @@ const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,se
     if(params.row.Config){
 
       try {
-        const result =  await axios.post('http://localhost:5000/updatehostedzone',{
+        const result =  await axios.post('https://dns-manager-tan.vercel.app/updatehostedzone',{
            Id,Name
          });
         
@@ -58,7 +58,7 @@ const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,se
          val = ResourceRecords;
       }
       try {
-        const result =  await axios.post('http://localhost:5000/updatednsrecord',{
+        const result =  await axios.post('https://dns-manager-tan.vercel.app/updatednsrecord',{
           data,Name,Type,TTL,val,final
         });
         if (result.status ===200) {

@@ -18,7 +18,7 @@ export default function TemporaryDrawer({params, clickrow}) {
     const men = {
       hostedZone: params.row.Id
     }
-    fetch('http://localhost:5000/gethostedzone',{
+    fetch('https://dns-manager-tan.vercel.app/gethostedzone',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
