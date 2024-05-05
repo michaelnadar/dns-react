@@ -5,7 +5,7 @@ import { grey } from '@mui/material/colors';
 import ZoneAction from './ZoneAction';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import {  Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, IconButton, Stack, TextField } from "@mui/material";
+import {  Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, IconButton, Stack, Fab } from "@mui/material";
 import FormControlContext from "@mui/material/FormControl/FormControlContext";
 import CloseIcon from "@mui/icons-material/Close"
 import { Input } from 'antd';
@@ -86,9 +86,13 @@ export  interface HostedZone {
               { loading ? (
                 <CircularProgress
                 />
-              ):(<DeleteIcon onClick={() => handleDelete(params.row.Id)}
-              style={{ color: 'red' }}
-              />)}
+              ):(
+                <DeleteIcon 
+                onClick={()=>handleDelete(params.row.Id)}
+              style={{ color: 'red' } }
+              />
+             
+              )}
               </>
             
           }, {field: 'View',headerName:'View',flex:1 , renderCell: (params) => (
@@ -119,16 +123,20 @@ export  interface HostedZone {
       setTextareaValue(event.target.value);
     };
     const handleDelete =async (id) => {
+     // const id= params.row.Id;
       SetLoading(true);
+      console.log("asfas");
       try {
-        const parts = id.split('/');
-        const result = await  axios.post('https://dns-manager-tan.vercel.app/deletehostedzone',
-        {hostedzone:parts[parts.length - 1]});
-        if(result.status===200){
-          SetLoading(false);
-          setFilteredRows((prevRows) => prevRows.filter((row) => row.Id !== id));
-          setSuccessMessage("Deleted Successfully");
-         }
+       
+          const parts = id.split('/');
+          const result = await  axios.post('https://dns-manager-tan.vercel.app/deletehostedzone',
+          {hostedzone:parts[parts.length - 1]});
+          if(result.status===200){
+            SetLoading(false);
+            setFilteredRows((prevRows) => prevRows.filter((row) => row.Id !== id));
+            setSuccessMessage("Deleted Successfully");
+           }
+       
       } catch (error) {
         SetLoading(false);
         console.log(error.response.data.error);
@@ -172,7 +180,7 @@ export  interface HostedZone {
           {successMessage}
         </Alert>)}
     <div className='flex justify-between mb-10'>
-      <div className='text-3xl'>Manage Hosted Zones - Total {filteredRows.length-1}
+      <div className='text-3xl'>Manage Hosted Zones - Total {filteredRows.length}
          </div>
       <div className='flex gap-7'>
       <IconButton onClick={handlePowerOff} aria-label="power off">
@@ -204,7 +212,7 @@ export  interface HostedZone {
             </Dialog>
     <Box
     sx={{
-        height:500,
+        height:650,
         width:'100%'
     }}
     >

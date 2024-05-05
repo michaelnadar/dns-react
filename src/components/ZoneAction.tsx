@@ -113,7 +113,7 @@ const ZoneAction = ({ params, rowId, setRowId ,setDone,data,setSuccessMessage,se
           width: 40,
           height: 40,
         }}
-        disabled={params.id !== rowId }
+        disabled={params.id !== rowId ||loading}
         onClick={handleSubmit}
       >
         <Save />

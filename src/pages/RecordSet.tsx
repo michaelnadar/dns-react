@@ -123,6 +123,7 @@ const RecordSet = () => {
       
     }
   ];
+  //asd
   const handleDelete =async (dataD) => {
     SetLoading(true);
     console.log(data)
@@ -186,7 +187,8 @@ const handleCreate = async()=>{
         }
       } catch (error) {
         console.log(error);
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response.data.error.message);
+        closepopup();
       }
   // Close the dialog
 
@@ -351,6 +353,7 @@ const handleCloseAlert = () => {
             type="number"
             label="TTL"
             name="TTL"
+            placeholder='in seconds'
             value={formData.TTL}
             onChange={handleChange}
             fullWidth
@@ -379,7 +382,7 @@ const handleCloseAlert = () => {
             </Dialog>
     <Box
     sx={{
-        height:500,
+        height:650,
         width:'100%'
     }}
     >
