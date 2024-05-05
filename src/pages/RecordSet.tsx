@@ -48,7 +48,7 @@ const RecordSet = () => {
     const men = {
       hostedZone: data
     }
-    fetch('http://localhost:5000/getrecordset',{
+    fetch('https://dns-manager-tan.vercel.app/getrecordset',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ const RecordSet = () => {
     try {
       
       const final =  JSON.stringify({hostedZone,dataD});
-      let result = await  axios.post('http://localhost:5000/deleterecordset',
+      let result = await  axios.post('https://dns-manager-tan.vercel.app/deleterecordset',
       {final});
      if(result.status === 200){
       //setSuccessMessage()
@@ -169,7 +169,7 @@ const handleCreate = async()=>{
       try {
         
         const hostedZone = {val:data};
-          const result= await axios.post('http://localhost:5000/creatednsrecord',
+          const result= await axios.post('https://dns-manager-tan.vercel.app/creatednsrecord',
          {formData,...hostedZone});
         //  '/bulkCreateHostedZones'
        // var count = 0 ;
@@ -236,7 +236,7 @@ const handleChange = (e) => {
 const handleBulkCreate =async () => {
  
   try {
-    const result= await axios.post('http://localhost:5000/createBulkRecordSets',
+    const result= await axios.post('https://dns-manager-tan.vercel.app/createBulkRecordSets',
     {textareaValue,data});
 
        //count = 0;
